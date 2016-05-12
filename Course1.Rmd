@@ -1,0 +1,96 @@
+---
+title: "Course1"
+author: "Gordon David Mosher"
+date: "May 5, 2016"
+output: html_document
+---
+
+
+```{r}
+## Generate an example data frame with ID numbers and DNA sequences
+fx <- function(test) {
+    x <- as.integer(runif(20, min=1, max=5))
+##  print("55555555555")
+##  print(x)
+    x[x==1] <- "A"; x[x==2] <- "T"; x[x==3] <- "G";      x[x==4] <- "C"
+##  print("66666666666")
+##  print(x)
+    paste(x, sep = "", collapse ="")
+}
+z1 <- c()
+for(i in 1:10) {
+    z1 <- c(fx(i), z1)
+}
+##z1
+z1 <- data.frame(ID=seq(along=z1), Seq=z1)
+##print("Here is the test data.")
+z1
+
+```
+
+```{r}
+## reverse the sequences and calculate the GC content
+fr <- function(i_) {
+  ## Write each character of sequence into separate    ##   vector field and reverse its order
+  my_split <<- strsplit(as.character(z1[i_,2]),"")
+  my_rev <- rev(my_split[[1]])
+##  print(as.table(table(my_split[[1]])/length(my_split[[1]])))
+  content <<- as.vector(table(my_split[[1]])/length(my_split[[1]]))
+  print(content)
+##  rbind(gc, content)
+##  print(paste(my_rev, sep = "", collapse=""))
+  paste(my_rev, sep = "", collapse="")
+}
+zr <- c()
+##gc <- c()
+for(i in 1:10) {
+  zr <- c(zr, fr(i)) ##in order top to bottom
+  if(i==1) {
+    gc <- table(my_split[[1]])/length(my_split[[1]])
+  } else {
+    gc <- rbind(gc, content)
+##    gc <- rbind(gc,table(my_split[[1]])/length(my_split[[1]]))
+  }
+}
+##zr
+zr <- data.frame(ID=seq(along=zr), Seq=zr)
+##print("Here is the reverse.")
+zr
+
+
+
+
+## Generate the sequence complement by replacing G|C|A|T by C|G|T|A
+fc <- function(i_) {
+  ms <- strsplit(as.character(z1[i_,2]),"")
+  y <- ms[[1]]  ## pull vector out of list
+  y[y=="A"] <- "t"  ## use lowercase
+  y[y=="T"] <- "a"  ## to indicate complement
+  y[y=="G"] <- "c"
+  y[y=="C"] <- "g"
+  paste(y, sep = "", collapse ="")
+}
+zc <- c()
+for(i in 1:10) {
+    zc <- c(zc, fc(i))  ##in order top to bottom
+}
+##z1
+zc <- data.frame(ID=seq(along=zc), Seq=zc)
+##print("Here is the complementary data.")
+zc
+
+```
+
+
+============
+```{r}
+## Use 'apply' or 'for loop' to apply the above operations to all sequences in sample data frame 'z1'
+## Calculate in the same loop the GC content for each sequence using the following command
+table(my_split[[1]])/length(my_split[[1]])
+##print("Here is all the data together.")
+print(gc)
+print(z1)
+print(zr)
+print(zc)
+```
+

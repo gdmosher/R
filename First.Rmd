@@ -1,0 +1,62 @@
+---
+title: "First! Document HTML"
+author: "Gordon David Mosher"
+date: "May 5, 2016"
+output:
+html_document:
+theme: united
+---
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r}
+summary(cars)
+summary(iris)
+```
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+summary(cars)
+```
+
+You can also embed plots, for example:
+
+```{r, echo=FALSE}
+plot(cars)
+summary(iris)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r qplot, flg.width=4, fig.height=3, message=FALSE}
+library(ggplot2)
+summary(cars)
+qplot(speed, dist, data=cars) + geom_smooth()
+
+```
+
+I counted `r 3+3`  red trucks on the highway.
+
+The Arithmetic mean is equal to $\frac{1}{n} \sum_{i=i}^{n} x_{i}$, or the summation of n numbers divided by n.
+
+
+```{r}
+myentries <- c("MKWVTFISLLFLFSSAYS", "MWVTFISLL", "MFISLLFLFSSAYS")                                                                                                                                        
+myresult <- NULL                                                                                                                                                                                              
+for(i in myentries) {                                                                                                                                                                                         
+        myurl <- paste("http://ca.expasy.org/cgi-bin/pi_tool?protein=", i, "&resolution=monoisotopic", sep="")                   
+        x <- url(myurl)                                                                                                                                                                                       
+        res <- readLines(x)                                                                                                                                                                                   
+        close(x)                                                                                                                                                                                              
+        mylines <- res[grep("Theoretical pI/Mw:", res)]                                                                                                                                                        
+        myresult <- c(myresult, as.numeric(gsub(".*/ ", "", mylines)))                                                                                                                                         
+        print(myresult)                                                                                                                                                                                       
+        Sys.sleep(1) # halts process for one sec to give web service a break                                                                                                                                     
+}                                                                                                                                                                                                             
+final <- data.frame(Pep=myentries, MW=myresult)                                                                                                                                                               
+cat("\n The MW values for my peptides are:\n")                                                                                                                                                                
+final
+
+```
+
+
+Done!
